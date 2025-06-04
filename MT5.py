@@ -210,10 +210,8 @@ class MT5:
    def close_all_night():
         result = MT5.resume()
         for i in range(len(result)):
-            before =  mt5.account_info().balance
-            row = result.iloc[0+i:1+i,:]
-            if row["position"][0]==0:
-                res = MT5.orders(row["symbol"][0], row["volume"][0], buy=True, id_position=row["ticket"][0])
-
+            row = result.iloc[i]
+            if row["position"] == 0:
+                MT5.orders(row["symbol"], row["volume"], buy=True, id_position=row["ticket"])
             else:
-                res = MT5.orders(row["symbol"][0], row["volume"][0], buy=False, id_position=row["ticket"][0])
+                MT5.orders(row["symbol"], row["volume"], buy=False, id_position=row["ticket"])
